@@ -4,7 +4,7 @@ import sys
 from ftplib import FTP
 import json
 
-def ftpFiles(host=None,files=[],user=None,passwd=None,timeout=5.0):
+def get(host=None,files=[],user=None,passwd=None,timeout=5.0):
     """grab files from FTP server using given specifications
     args:
         host = hostname of ftp server
@@ -66,6 +66,7 @@ def ftpFiles(host=None,files=[],user=None,passwd=None,timeout=5.0):
         raise
 
     #we made it, return json results
+    print json.dumps(results)
     return json.dumps(results)
 
 
@@ -80,6 +81,5 @@ if __name__ == '__main__':
 
     results = dict()
     for server in servers:
-        results[server] = ftpFiles('ftp.debian.org',files)
-
+        results[server] = get('ftp.debian.org',files)
     print results
