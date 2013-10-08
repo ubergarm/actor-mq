@@ -36,19 +36,8 @@ def get(host=None,files=[],user=None,passwd=None,timeout=5.0):
         sys.stderr.write(str(e)+'\n')
         raise
 
+    # now get each file
     for fname in files:
-        # # split absolute file name into path and name
-        # filedir = '/'.join(fname.split('/')[:-1])
-        # filename = fname.split('/')[-1]
-
-        # # first CWD into the directory that contains the file
-        # try:
-        #     ftp.cwd(filedir)
-        # except Exception as e:
-        #     sys.stderr.write(str(e)+'\n')
-        #     raise
-
-        # now get the file
         data = []
         try:
             ftp.retrbinary('RETR {0}'.format(fname), data.extend)
@@ -57,6 +46,8 @@ def get(host=None,files=[],user=None,passwd=None,timeout=5.0):
             raise
         finally:
             results[fname] = len(data)
+            # do something with actual data now e.g.:
+            # write to disk or pass along for processing
 
     #all done, clean up
     try:
