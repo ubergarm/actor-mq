@@ -58,3 +58,5 @@ Just in case you want a different zmq ver:
 * [gevent](http://sdiehl.github.io/gevent-tutorial/) -- concurrency based lib
 * [libevent](http://libevent.org/) -- event notification library
 * [0mq](http://zeromq.org/)
+* [G. Peretin - EURO Python 2013 - Greenlet based concurrency](https://www.youtube.com/watch?v=b9vTUZYmtiE)
+* [mongodb gevent / greenlet support](http://api.mongodb.org/python/current/examples/gevent.html)

@@ -6,12 +6,14 @@ import time
 import datetime
 import gevent
 import gevent.monkey; gevent.monkey.patch_all()
+from gevent import Timeout
 import pymongo
 
 def worker(pid, collection, target):
     # scrape the data into a dict
     print 'Worker {0}: Scraping data from {1}'.format(pid, target)
     # insert the data dict as JSON into the db collection
+    gevent.sleep(pid)
     collection.save({ 'pid'     : pid,
                       'date'    : datetime.datetime.utcnow() })
 
@@ -36,10 +38,12 @@ def main():
     # 2) Spawn the worker threads
     print 'Spawning workers'
     gthreads = []
-    for pid in xrange(500):
-        gthreads.append(gevent.spawn(worker, pid, db.test_collection, 'http://webpage.foo'))
+    for pid in xrange(20):
+        gthread = gevent.spawn(worker, pid, db.test_collection, 'http://webpage.foo')
+        gthreads.append(gthread)
+
     print 'Joining workers'
-    gevent.joinall(gthreads)
+    gevent.joinall(gthreads, timeout=5.0)
 
     # 3) Print out results
     for item in db.test_collection.find():

@@ -7,6 +7,7 @@
 
 import time
 import gevent
+import gevent.monkey; gevent.monkey.patch_all()
 import zmq.green as zmq
 
 # Global Context
